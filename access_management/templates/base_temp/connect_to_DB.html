@@ -1,0 +1,150 @@
+{% extends "base_temp/base.html" %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="card bg-glass">
+            {% if message_error %}
+            <div style="text-align: center" class="alert alert-danger" style="white-space: pre-line">
+              {{ message_error }}
+            </div>
+            {% elif message_succ %}
+            <div style="text-align: center" class="alert alert-success" style="white-space: pre-line">
+              {{ message_succ }}
+            </div>
+            {% endif %}
+            <h3>Connect To Database</h3>
+          </div>
+          <div class="card-body">
+            <form accept-charset="utf-8" enctype="multipart/form-data" method="POST">
+              {% csrf_token %}
+              <div class="mb-3">
+                <!-- <label for="last-name" class="form-label">Host Address</label> -->
+                <input type="text" name="host-address" class="form-control" value="{{ host_address }}" required placeholder="Host Address" />
+              </div>
+              <div class="mb-3">
+                <!-- <label for="first-name" class="form-label">DB:username</label> -->
+                <input type="text" name="Db-username" class="form-control" value="{{ db_username }}" required placeholder="Database username" />
+              </div>
+              <div class="mb-3">
+                <input type="text" name="Db-password" class="form-control" value="{{ db_password }}" required placeholder="Database Password"/>
+              </div>
+              <div class="mb-3">
+                <button type="submit" name="action" value="test_connection" class="btn btn-success"
+                  id="test-connection">Test
+                  Connection</button>
+              </div>
+              <div class="card bg-glass">
+                <h3>Give Access</h3>
+              </div>
+              <div class="mb-3">
+                <select name="database" class="form-select" id="database-select">
+                  <option value="" disabled selected>Select Database</option>
+                  {% for db in databases %}
+                  <option value="{{db}}">{{db}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <select name="db-login" class="form-select" id="database-users-select">
+                  <option value="" disabled selected>Select Database Users</option>
+                  {% for user in login_users %}
+                  <option value="{{user}}">{{user}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <!-- <label for="first-name" class="form-label">Access Time</label> -->
+                  
+                  <input type="number" name="Duration-time" value="{{access_time_length}}" class="form-control" placeholder="Access Time">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <!-- <label for="industry" class="form-label">Time Measurement</label> -->
+                  <select name="time-measurment" class="form-select" id="database-users-select">
+                    <option value="" disabled selected>Select Time Measurement</option>
+
+                    <option value="minute">Minute</option>
+                    <option value="hour">Hour</option>
+                    <option value="day">Day</option>
+                    <option value="week">Week</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <input type="text" name="access-given-to" class="form-control" value=""
+                  placeholder="Access Given To" />
+              </div>
+              
+                  <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"
+                      value="{{access_detail}}" name="DB-access-letter"></textarea>
+                    <label for="floatingTextarea2">Database Access Request Letter</label>
+                  </div>
+                <!-- <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <input type="file" name="movie_profile_image" id="movie_profile_image" class="form-control" accept="image/*"
+                            required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          {% load static %}
+                          <img id="preview-image" class="img-preview" alt="Image Preview">
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+
+
+              <div class="mb-3">
+                <button type="submit" name="action" value="give_access" class="btn btn-success" id="give-access">Give
+                  Access
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#database-select').select2();
+    $('#database-users-select').select2();
+  });
+  function updateImagePreviewMovie(input) {
+      var previewImage = document.getElementById('preview-image');
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          previewImage.src = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      } else {
+        // Set a default image if no image is selected
+        previewImage.src = 'static/img/image.jpg'; // Update the path accordingly
+      }
+    }
+
+    // Add event listener to trigger image preview update when a file is selected
+    document.getElementById('movie_profile_image').addEventListener('change', function () {
+      updateImagePreviewMovie(this);
+    });
+
+
+</script>
+
+{% endblock %}

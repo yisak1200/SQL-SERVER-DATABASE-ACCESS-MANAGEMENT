@@ -1,0 +1,8 @@
+{% extends "base_temp/base.html" %} {% block content %}
+{% load static %}
+<h1 class="text-center">CNET DB ACCESS MANAGEMNT 
+</h1>
+<img src="{% static 'img/microsoft-sql-server4529.jpg' %}" alt="SQL Server Logo" class="app-logo"
+        style="display: block; margin: 0 auto; max-width: 300px; height: auto;">
+{{ redirect_to_login_immediately }}
+{% endblock %}

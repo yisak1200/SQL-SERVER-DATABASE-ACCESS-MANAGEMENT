@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>CNET DATABASE ACCESS MANAGEMNT SYSTEM</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+    <link href="{% static 'vendor/fontawesome/css/fontawesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/fontawesome/css/solid.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/fontawesome/css/brands.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/master.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/flagiconcss/css/flag-icon.min.css' %}" rel="stylesheet">
+    <link href="{% static 'img/logoooo-01.png' %}" rel="icon" type="image/x-icon" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mx-auto">
+                <div class="card" style="margin-top:100px;">
+                    <div class="card-header">
+                        <div class="card bg-glass">
+                            {% if message_error %}
+                            <div style="text-align: center" class="alert alert-danger" style="white-space: pre-line">
+                                {{ message_error }}
+                            </div>
+                            {% elif message_succ %}
+                            <div style="text-align: center" class="alert alert-success" style="white-space: pre-line">
+                                {{ message_succ }}
+                            </div>
+                            {% endif %}
+                            <h3>Database Access Close Confirmation</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-floating">
+                            Are You Sure You Want to Close This Access
+                        </div>
+                        <form method="post" action="{% url 'CloseManually' %}" >
+                            {% csrf_token %}
+                            <input type="hidden" name="granted_db_id" value="{{ db_access.id }}">
+                        <button class="btn btn btn-secondary mt-2" id="copyButton"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-copy" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z" />
+                            </svg> Yes </button>
+                            <button class="btn btn btn-secondary mt-2" id="copyButton"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z" />
+                                </svg> No </button>
+                                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="back-button" style="text-align: center; margin-top:10px">
+        <a class="btn btn btn-success" href="{% url 'Given_access' %}"><svg xmlns="http://www.w3.org/2000/svg"
+                width="16" height="16" fill="currentColor" class="bi bi-skip-backward-fill" viewBox="0 0 16 16">
+                <path
+                    d="M.5 3.5A.5.5 0 0 0 0 4v8a.5.5 0 0 0 1 0V8.753l6.267 3.636c.54.313 1.233-.066 1.233-.697v-2.94l6.267 3.636c.54.314 1.233-.065 1.233-.696V4.308c0-.63-.693-1.01-1.233-.696L8.5 7.248v-2.94c0-.63-.692-1.01-1.233-.696L1 7.248V4a.5.5 0 0 0-.5-.5" />
+            </svg> Back</a>
+    </div>
+</body>
+
+</html>

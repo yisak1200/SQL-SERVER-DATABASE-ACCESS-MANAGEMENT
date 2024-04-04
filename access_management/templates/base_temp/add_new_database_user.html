@@ -1,0 +1,56 @@
+{% extends "base_temp/base.html" %} {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card bg-glass">
+                        {% if message_error %}
+                        <div style="text-align: center" class="alert alert-danger" style="white-space: pre-line">
+                            {{ message_error}}
+                        </div>
+                        {% elif message_succ %}
+                        <div style="text-align: center" class="alert alert-success" style="white-space: pre-line">
+                            {{ message_succ }}
+                        </div>
+
+                        {% endif %}
+
+                        <h3>New Database User</h3>
+                    </div>
+                    <div class="card-body">
+                        <form accept-charset="utf-8" enctype="multipart/form-data" method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="last-name" class="form-label">Host Address</label>
+                                <input type="text" name="server_ip" class="form-control" value="" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="first-name" class="form-label">Port</label>
+                                <input type="number" name="port" class="form-control" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="first-name" class="form-label">DB:username</label>
+                                <input type="text" name="username" class="form-control" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="first-name" class="form-label">DB:Password</label>
+                                <input type="text" name="password" class="form-control" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="first-name" class="form-label">DB:Name</label>
+                                <input type="text" name="dbname" class="form-control" required />
+                            </div>
+                            
+                            <!-- Add this inside the form to display the image preview -->
+                            <div class="mb-3">
+                                <input type="submit" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</div>

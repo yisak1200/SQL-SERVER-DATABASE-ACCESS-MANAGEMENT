@@ -1,0 +1,93 @@
+{% extends 'base_temp/base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="card bg-glass">
+        {% if message_error %}
+        <div style="text-align: center" class="alert alert-danger" style="white-space: pre-line">
+            {{ message_error}}
+        </div>
+        {% elif message_succ %}
+        <div style="text-align: center" class="alert alert-success" style="white-space: pre-line">
+            {{ message_succ }}
+        </div>
+        {% endif %}
+        </div>
+        <div class="card">
+            <div class="card-header">
+                List of Granted Database Access
+            </div>
+            <div class="col-md-4 col-lg-4 mb-3">
+                <form method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control text-center" placeholder="Search" name="search" autocomplete="off" style="margin-top: 20px;">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit" style="margin-top: 20px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                            </svg></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="card-body">
+            <p class="card-title"></p>
+            <div class="table-responsive">
+                <table class="table table-hover" id="dataTables-example" width="100%">
+                    <thead>
+                        <tr style="font-weight: normal; font-size: smaller;">
+                            <th>Host Address</th>
+                            <th>Granted DB Name</th>
+                            <th>Granted DB Username</th>
+                            <th>Granted DB Password</th>
+                            <th>Access Time Length</th>
+                            <th>Access Given Date</th>
+                            <th>Access Expiration Date</th>
+                            <th>Access Given To</th>
+                            <th>Edit</th>
+                            <th>Access Status</th>
+                            <th>Confirmation letter</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for db_access in database_access %}
+                        {% if db_access.access_status == 'Granted' %}
+                        <tr>
+                            <td>{{ db_access.host_address }}</td>
+                            <td>{{ db_access.granted_database }}</td>
+                            <td>{{ db_access.access_db_username }}</td>
+                            <td>{{ db_access.database_access_password }}</td>
+                            <td>{{ db_access.access_time_length }}</td>
+                            <td>{{ db_access.access_given_date }}</td>
+                            <td>{{ db_access.access_end_time }}</td>
+                            <td>{{ db_access.access_given_to }}</td>
+                            <!-- <td style="color:red">{{ db_access.access_status }}</td> -->
+                            <td><a href="#" class="btn btn-outline-info btn-rounded"><i
+                                    class="fas fa-pen"></i>
+                            </a></td>
+                            <td>
+                            <form method="post" action="{% url 'CloseManually' %}">
+    {% csrf_token %}
+    <input type="hidden" name="granted_db_id" value="{{ db_access.id }}">
+    <button type="submit" class="btn btn-outline-danger btn-rounded">
+        Granted 
+        Close Access
+    </button>
+</form>
+
+                            </td>
+                            <td><a href="{% url 'ConfirmationLetter' db_access.id %}"><button type="button" class="btn btn-success">Generate</button></a></td> 
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+</div>
+</div>
+{% endblock %}
