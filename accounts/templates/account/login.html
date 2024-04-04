@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>DB Admin login</title>
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/auth.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/flagiconcss/css/flag-icon.min.css' %}" rel="stylesheet">
+    <link href="{% static 'img/logoooo-01.png' %}" rel="icon" type="image/x-icon" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="auth-content">
+            <div class="card">
+                <div class="card-body text-center">
+                    {% for message in messages %}
+                    <div style="text-align: center;" class="alert alert-success" style="white-space: pre-line;">
+                        {{ message}}
+                    </div>
+                    {% endfor %}
+                    {% if message_error %}
+                    <div style="text-align: center;" class="alert alert-danger" style="white-space: pre-line;">
+                        {{ message_error}}
+                    </div>
+                    {% elif message_succ %}
+                    <div style="text-align: center;" class="alert alert-success" style="white-space: pre-line;">
+                    
+                        {{ message_succ }}
+                    
+                    </div>
+                    
+                    {% endif %}
+                    <div class="mb-3">
+                    
+                        {% load static %}
+                        <img src="{% static 'img/logoooo-01.png' %}" alt="CNET Logo" class="app-logo"
+                            style="display: block; margin: 0 auto; max-width: 300px; height: auto;">
+                    </div>
+                    <h3 class="mb-4 text-muted">CNET DB ACCESS MANAGEMENT</h3>
+                    <form  method="post">
+                        {% csrf_token %}
+                        <div class="mb-3 text-start">
+                            <label for="email" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" required value="{{username}}">
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="mb-3 text-start">
+                        </div>
+                        <button class="btn btn-primary shadow-2 mb-4">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
